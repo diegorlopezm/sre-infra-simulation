@@ -1,0 +1,57 @@
+# ===============================
+# Ansible
+# ===============================
+*.retry
+
+# ===============================
+# Python
+# ===============================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# ===============================
+# Docker
+# ===============================
+*.log
+*.pid
+*.seed
+*.pid.lock
+*.sock
+
+# Ignore build cache
+**/.cache/
+**/.pytest_cache/
+**/.tox/
+**/.mypy_cache/
+**/.pytest_cache/
+
+# ===============================
+# Postgres containers (postgres01, postgres02, etc.)
+# ===============================
+# Ignore database runtime data, only keep Dockerfile and init scripts
+docker-lab/postgres*/base/
+docker-lab/postgres*/global/
+docker-lab/postgres*/pg_*/
+docker-lab/postgres*/postmaster.*
+docker-lab/postgres*/postgresql.auto.conf
+docker-lab/postgres*/postgresql.conf
+docker-lab/postgres*/pg_hba.conf
+docker-lab/postgres*/pg_ident.conf
+
+# ===============================
+# Redis / RabbitMQ containers
+# ===============================
+# Ignore runtime data
+docker-lab/redis*/data/
+docker-lab/rabbitmq*/data/
+docker-lab/redis*/dump.rdb
+docker-lab/redis*/appendonly.aof
+
+# ===============================
+# System junk
+# ===============================
+.DS_Store
+Thumbs.db
+
