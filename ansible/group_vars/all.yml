@@ -1,0 +1,2 @@
+zbx_server_host: "zabbix-server"
+host_metadata: "docker"

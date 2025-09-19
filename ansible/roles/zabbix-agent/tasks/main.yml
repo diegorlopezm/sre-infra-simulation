@@ -1,0 +1,34 @@
+- name: Instalar Zabbix Agent
+  apt:
+    name: zabbix-agent
+    state: present
+
+- name: Crear directorio zabbix_agentd.d
+  file:
+    path: /etc/zabbix/zabbix_agentd.d
+    state: directory
+    owner: zabbix
+    group: zabbix
+    mode: '0755'
+
+- name: Crear directorio de logs
+  file:
+    path: /var/log/zabbix
+    state: directory
+    owner: zabbix
+    group: zabbix
+    mode: '0755'
+
+- name: Configurar Zabbix Agent
+  template:
+    src: zabbix_agentd.conf.j2
+    dest: /etc/zabbix/zabbix_agentd.conf
+    owner: zabbix
+    group: zabbix
+    mode: '0644'
+
+- name: Iniciar Zabbix Agent en contenedores sin systemd
+  command: /usr/sbin/zabbix_agentd -c /etc/zabbix/zabbix_agentd.conf
+  args:
+    creates: /var/run/zabbix_agentd.pid
+  become_user: zabbix

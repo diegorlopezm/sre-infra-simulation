@@ -1,0 +1,21 @@
+# Zabbix Agent configuration for auto registration
+
+# IP o hostname de tu servidor Zabbix
+Server={{ zbx_server_host }}
+ServerActive={{ zbx_server_host }}
+
+# Nombre del host que verá Zabbix (usamos el nombre del contenedor/host)
+Hostname={{ inventory_hostname }}
+
+# Metadata para auto registration
+HostMetadata={{ host_metadata | default('docker') }}
+
+# Incluir archivos adicionales si los tienes
+Include=/etc/zabbix/zabbix_agentd.d/*.conf
+
+
+# Logging configuration
+LogType=file
+LogFile=/var/log/zabbix/zabbix_agentd.log
+LogFileSize=0
+

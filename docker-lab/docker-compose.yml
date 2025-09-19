@@ -22,43 +22,34 @@ services:
       - web03
     restart: unless-stopped
 
-  # Web Servers
+  # Web Servers (usando imágenes personalizadas)
   web01:
-    image: nginx:latest
+    build: ./web01
     container_name: web01
     networks:
       - frontend
       - backend
-    volumes:
-      - ./web01/html:/usr/share/nginx/html
-      - ./web01/nginx.conf:/etc/nginx/nginx.conf:ro
     restart: unless-stopped
 
   web02:
-    image: nginx:latest
+    build: ./web02
     container_name: web02
     networks:
       - frontend
       - backend
-    volumes:
-      - ./web02/html:/usr/share/nginx/html
-      - ./web02/nginx.conf:/etc/nginx/nginx.conf:ro
     restart: unless-stopped
 
   web03:
-    image: nginx:latest
+    build: ./web03
     container_name: web03
     networks:
       - frontend
       - backend
-    volumes:
-      - ./web03/html:/usr/share/nginx/html
-      - ./web03/nginx.conf:/etc/nginx/nginx.conf:ro
     restart: unless-stopped
 
-  # Databases
+  # Databases (imágenes personalizadas)
   postgres01:
-    image: postgres:15
+    build: ./postgres01
     container_name: postgres01
     networks:
       - backend
@@ -66,12 +57,10 @@ services:
       POSTGRES_PASSWORD: example
       POSTGRES_USER: admin
       POSTGRES_DB: mydb
-    volumes:
-      - ./postgres01:/var/lib/postgresql/data
     restart: unless-stopped
 
   postgres02:
-    image: postgres:15
+    build: ./postgres02
     container_name: postgres02
     networks:
       - backend
@@ -79,12 +68,11 @@ services:
       POSTGRES_PASSWORD: example
       POSTGRES_USER: admin
       POSTGRES_DB: mydb
-    volumes:
-      - ./postgres02:/var/lib/postgresql/data
     restart: unless-stopped
 
+  # Redis (imagen personalizada)
   redis01:
-    image: redis:7
+    build: ./redis01
     container_name: redis01
     networks:
       - backend
@@ -92,9 +80,9 @@ services:
       - "6379:6379"
     restart: unless-stopped
 
-  # Message Queue
+  # RabbitMQ (imagen personalizada)
   rabbitmq01:
-    image: rabbitmq:3-management
+    build: ./rabbitmq01
     container_name: rabbitmq01
     networks:
       - backend
@@ -135,9 +123,9 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: example
       ZBX_SERVER_HOST: zabbix-server
-      PHP_TZ: "America/New_York" # Ajusta tu zona horaria
+      PHP_TZ: "America/New_York"
     ports:
-      - "8081:8080" # Acceso web desde http://localhost:8081
+      - "8081:8080"
     depends_on:
       - zabbix-server
       - postgres01

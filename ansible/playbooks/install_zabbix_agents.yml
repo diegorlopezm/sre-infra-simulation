@@ -1,0 +1,5 @@
+- name: Instalar Zabbix Agent en todos los contenedores
+  hosts: web_servers,db_servers,redis_servers
+  gather_facts: false
+  roles:
+    - zabbix-agent
